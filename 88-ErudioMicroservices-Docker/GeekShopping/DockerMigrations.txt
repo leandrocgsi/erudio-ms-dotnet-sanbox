@@ -1,0 +1,6 @@
+
+http://codebuckets.com/2020/08/14/applying-entity-framework-migrations-to-a-docker-container/
+
+https://andrewlock.net/running-net-core-global-tools-in-non-sdk-docker-images/
+
+https://docs.microsoft.com/pt-br/ef/core/managing-schemas/migrations/?tabs=dotnet-core-cli

@@ -1,0 +1,37 @@
+version: '3.4'
+
+services:
+  db:
+    image: mysql:5.7.22
+    command: mysqld --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      TZ: America/Sao_Paulo
+      MYSQL_ROOT_PASSWORD: admin123
+      MYSQL_USER: docker
+      MYSQL_PASSWORD: admin123
+      MYSQL_DATABASE: pg_geek_shopping_product_api
+    ports:
+      - 3308:3306
+    networks:
+      - erudio-network
+      
+  geek-shopping-product-api:
+    image: geek-shopping-product-api
+    command: dotnet tool install --global dotnet-ef | dotnet ef database update
+    build:
+      context: .
+      dockerfile: GeekShopping.ProductAPI/Dockerfile
+    environment:
+      TZ: America/Sao_Paulo
+      ASPNETCORE_ENVIRONMENT: Production
+    ports:
+      - 44333:80
+    depends_on:
+      - db
+    networks:
+      - erudio-network
+networks:
+  erudio-network:
+    driver: bridge
+    
