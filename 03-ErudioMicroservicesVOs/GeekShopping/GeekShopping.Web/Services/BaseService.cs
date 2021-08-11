@@ -58,13 +58,12 @@ namespace GeekShopping.Web.Services
                 apiResponse = await client.SendAsync(message);
 
                 var apiContent = await apiResponse.Content.ReadAsStringAsync();
-                var apiResponse = JsonSerializer.Deserialize<T>(apiContent, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+                var apiResponseVo = JsonSerializer.Deserialize<T>(apiContent, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
           
-                return apiResponse;
+                return apiResponseVo;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-
                 throw;
             }
         }
