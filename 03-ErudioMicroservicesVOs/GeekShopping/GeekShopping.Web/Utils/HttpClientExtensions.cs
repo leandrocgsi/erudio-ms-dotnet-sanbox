@@ -1,21 +1,39 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace GeekShopping.Web.Utils
 {
-    public class HttpClientExtensions
+    public static class HttpClientExtensions
     {
-        public static string ProductAPIBase {  get; set; }
-
-        public enum ApiType
+        public static async Task<T> ReadContentAs<T>(this HttpResponseMessage response)
         {
-            GET,
-            POST,
-            PUT,
-            DELETE,
-            PATCH
+            if (!response.IsSuccessStatusCode)
+                throw new ApplicationException($"Something went wrong calling the API: {response.ReasonPhrase}");
+
+            var dataAsString = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+
+            return JsonSerializer.Deserialize<T>(dataAsString, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+        }
+
+        public static Task<HttpResponseMessage> PostAsJson<T>(this HttpClient httpClient, string url, T data)
+        {
+            var dataAsString = JsonSerializer.Serialize(data);
+            var content = new StringContent(dataAsString);
+            content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+
+            return httpClient.PostAsync(url, content);
+        }
+
+        public static Task<HttpResponseMessage> PutAsJson<T>(this HttpClient httpClient, string url, T data)
+        {
+            var dataAsString = JsonSerializer.Serialize(data);
+            var content = new StringContent(dataAsString);
+            content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+
+            return httpClient.PutAsync(url, content);
         }
     }
 }
