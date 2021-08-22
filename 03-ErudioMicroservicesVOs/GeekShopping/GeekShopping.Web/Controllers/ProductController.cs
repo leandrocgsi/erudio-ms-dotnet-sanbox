@@ -1,4 +1,4 @@
-﻿using GeekShopping.Web.Data.ValueObjects;
+﻿using GeekShopping.Web.Models;
 using GeekShopping.Web.Services.IServices;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
