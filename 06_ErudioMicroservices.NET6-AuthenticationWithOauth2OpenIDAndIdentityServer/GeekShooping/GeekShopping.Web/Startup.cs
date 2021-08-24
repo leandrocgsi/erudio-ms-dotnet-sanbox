@@ -1,5 +1,6 @@
-using GeekShopping.Web.Services;
+ using GeekShopping.Web.Services;
 using GeekShopping.Web.Services.IServices;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -25,9 +26,30 @@ namespace GeekShopping.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddHttpClient<IProductService, ProductService>(c =>
-                    c.BaseAddress = new Uri(Configuration["ServiveUrls:ProductAPI"])
+                    c.BaseAddress = new Uri(Configuration["ServiceUrls:ProductAPI"])
                 );
             services.AddControllersWithViews();
+
+            services.AddAuthentication(options =>
+            {
+                options.DefaultScheme = "Cookies";
+                options.DefaultChallengeScheme = "oidc";
+            })
+                .AddCookie("Cookies", c => c.ExpireTimeSpan = TimeSpan.FromMinutes(10))
+                .AddOpenIdConnect("oidc", options =>
+                {
+                    options.Authority = Configuration["ServiceUrls:IdentityServer"];
+                    options.GetClaimsFromUserInfoEndpoint = true;
+                    options.ClientId = "geek_shopping";
+                    options.ClientSecret = "my_super_secret";
+                    options.ResponseType = "code";
+                    options.TokenValidationParameters.NameClaimType = "name";
+                    options.TokenValidationParameters.RoleClaimType = "role";
+                    options.Scope.Add("geek_shopping");
+                    //options.RequireHttpsMetadata = false;
+                    options.SaveTokens = true;
+                }
+            );
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -41,10 +63,13 @@ namespace GeekShopping.Web
             {
                 app.UseExceptionHandler("/Home/Error");
             }
+
+            app.UseHttpsRedirection();
+
             app.UseStaticFiles();
 
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

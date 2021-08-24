@@ -37,7 +37,7 @@ namespace GeekShopping.IdentityServer.Initializer
                 LastName = "Admin"
             };
 
-            _user.CreateAsync(admin, "Erudio123#").GetAwaiter().GetResult();
+            _user.CreateAsync(admin, "Erudio123$").GetAwaiter().GetResult();
             _user.AddToRoleAsync(admin, IdentityConfiguration.Admin).GetAwaiter().GetResult();
 
             var adminClaims = _user.AddClaimsAsync(admin, new Claim[] {
@@ -57,7 +57,7 @@ namespace GeekShopping.IdentityServer.Initializer
                 LastName = "Client"
             };
 
-            _user.CreateAsync(client, "Erudio123#").GetAwaiter().GetResult();
+            _user.CreateAsync(client, "Erudio123$").GetAwaiter().GetResult();
             _user.AddToRoleAsync(client, IdentityConfiguration.Client).GetAwaiter().GetResult();
 
             var clientClaims = _user.AddClaimsAsync(client, new Claim[] {
