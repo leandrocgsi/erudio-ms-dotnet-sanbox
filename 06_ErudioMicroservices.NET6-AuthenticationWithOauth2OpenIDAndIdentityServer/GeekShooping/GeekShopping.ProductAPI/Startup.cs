@@ -50,7 +50,7 @@ namespace GeekShopping.ProductAPI
                 .AddJwtBearer("Bearer", options =>
                 {
 
-                    options.Authority = "https://localhost:5010/";
+                    options.Authority = "https://localhost:4435/";
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
                         ValidateAudience = false
@@ -114,7 +114,7 @@ namespace GeekShopping.ProductAPI
             app.UseHttpsRedirection();
 
             app.UseRouting();
-
+            app.UseAuthentication(); 
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
