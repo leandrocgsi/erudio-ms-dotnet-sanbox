@@ -9,8 +9,9 @@ using System.Threading.Tasks;
 
 namespace GeekShopping.CouponAPI.Controllers
 {
-    [ApiController]
+
     [Route("api/v1/[controller]")]
+    [ApiController]
     public class CouponController : ControllerBase
     {
         private ICouponRepository _repository;

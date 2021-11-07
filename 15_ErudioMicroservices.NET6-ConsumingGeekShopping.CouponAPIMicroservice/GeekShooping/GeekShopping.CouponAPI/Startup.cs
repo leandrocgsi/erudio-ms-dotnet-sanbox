@@ -1,6 +1,7 @@
 using AutoMapper;
 using GeekShopping.CouponAPI.Config;
 using GeekShopping.CouponAPI.Model.Context;
+using GeekShopping.CouponAPI.Repository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -38,7 +39,7 @@ namespace GeekShopping.CouponAPI
             services.AddSingleton(mapper);
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
-            //services.AddScoped<ICouponRepository, CouponRepository>();
+            services.AddScoped<ICouponRepository, CouponRepository>();
 
             services.AddControllers();
 
