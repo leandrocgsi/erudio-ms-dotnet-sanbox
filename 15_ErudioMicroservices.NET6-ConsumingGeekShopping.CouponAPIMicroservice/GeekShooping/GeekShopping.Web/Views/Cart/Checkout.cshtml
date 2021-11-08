@@ -9,8 +9,8 @@
 {
     <form method="post">
 
-         <input asp-for="CartHeader.UserId" hidden />
-         <input asp-for="CartHeader.Id" hidden />
+        <input asp-for="CartHeader.UserId" hidden />
+        <input asp-for="CartHeader.Id" hidden />
         <input asp-for="CartHeader.CouponCode" hidden />
         <input asp-for="CartHeader.DiscountTotal" hidden />
         <input asp-for="CartHeader.PurchaseAmount" hidden />
@@ -38,10 +38,10 @@
                             <label class="col-form-label">Phone :</label>
                             <input asp-for="CartHeader.Phone" class="form-control" />
                         </div>
-                        <div class="col-12">
+@*                        <div class="col-12">
                             <label class="col-form-label">PickUp Time</label>
                             <input asp-for="CartHeader.PickupDateTime" class="form-control form_datetime" type="text">
-                        </div>
+                        </div>*@
                         <div class="col-12">
                             <label class="col-form-label">Card Number :</label>
                             <input  asp-for="CartHeader.CardNumber" class="form-control" />
