@@ -75,7 +75,6 @@ namespace GeekShopping.Web.Services
 
         public async Task<CartHeaderViewModel> Checkout(CartHeaderViewModel model, string token)
         {
-            //Copiar Apply Coupon
             _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
             var response = await _client.PostAsJson($"{BasePath}/checkout", model);
             if (response.IsSuccessStatusCode)

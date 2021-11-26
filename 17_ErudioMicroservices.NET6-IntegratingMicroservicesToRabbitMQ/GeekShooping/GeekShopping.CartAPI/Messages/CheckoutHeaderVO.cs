@@ -1,13 +1,13 @@
 ﻿using GeekShopping.CartAPI.Data.ValueObjects;
 using System;
-using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace GeekShopping.CartAPI.Messages
 {
     public class CheckoutHeaderVO
     {
-        //Copiar CartHeaderViewModel
         public long Id { get; set; }
         public string UserId { get; set; }
         public string CouponCode { get; set; }
@@ -23,6 +23,6 @@ namespace GeekShopping.CartAPI.Messages
         public string ExpiryMothYear { get; set; }
 
         public int CartTotalItens { get; set; }
-        public IEnumerable<CartDetailVO> CartDetails{ get; set; }
+        public IEnumerable<CartDetailVO> CartDetails { get; set; }
     }
 }
