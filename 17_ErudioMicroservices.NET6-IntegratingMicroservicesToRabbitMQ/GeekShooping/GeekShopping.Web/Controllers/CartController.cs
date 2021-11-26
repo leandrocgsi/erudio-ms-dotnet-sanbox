@@ -87,20 +87,19 @@ namespace GeekShopping.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Checkout(CartViewModel model)
         {
+            //Duplicar Checkout()
             var token = await HttpContext.GetTokenAsync("access_token");
 
             var response = await _cartService.Checkout(model.CartHeader, token);
 
-            if (response != null)
-            {
-                return RedirectToAction(nameof(Confirmation));
-            }
+            if (response != null) return RedirectToAction(nameof(Confirmation));
             return View(model);
         }
 
         [HttpGet]
         public async Task<IActionResult> Confirmation()
         {
+            //Duplicar Checkout()
             return View();
         }
 
