@@ -1,4 +1,5 @@
-﻿using GeekShopping.MessageBus;
+﻿using GeekShopping.CartAPI.Messages;
+using GeekShopping.MessageBus;
 using RabbitMQ.Client;
 using System;
 using System.Text;
@@ -26,10 +27,22 @@ namespace GeekShopping.CartAPI.RabbitMQSender
             {
                 using var channel = _connection.CreateModel();
                 channel.QueueDeclare(queue: queueName, false, false, false, arguments: null);
-                var json = JsonSerializer.Serialize(message);
-                var body = Encoding.UTF8.GetBytes(json);
+
+                byte[] body = GetMessageAsByteArray(message);
                 channel.BasicPublish(exchange: "", routingKey: queueName, basicProperties: null, body: body);
             }
+        }
+
+        private static byte[] GetMessageAsByteArray(BaseMessage message)
+        {
+            var options = new JsonSerializerOptions
+            {
+                WriteIndented = true
+            };
+
+            var json = JsonSerializer.Serialize<CheckoutHeaderVO>((CheckoutHeaderVO)message, options);
+            var body = Encoding.UTF8.GetBytes(json);
+            return body;
         }
 
         private void CreateConnection()
