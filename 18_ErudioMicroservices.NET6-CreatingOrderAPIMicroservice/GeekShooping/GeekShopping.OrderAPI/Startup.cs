@@ -1,4 +1,5 @@
 using GeekShopping.OrderAPI.Model.Context;
+using GeekShopping.OrderAPI.RabbitMQSender;
 using GeekShopping.OrderAPI.Repository;
 using Mango.Services.OrderAPI.Messaging;
 using Microsoft.AspNetCore.Builder;
@@ -48,7 +49,7 @@ namespace GeekShopping.OrderAPI
 
 
             services.AddHostedService<RabbitMQCheckoutConsumer>();
-            //services.AddSingleton<IRabbitMQMessageSender, RabbitMQMessageSender>();
+            services.AddSingleton<IRabbitMQMessageSender, RabbitMQMessageSender>();
 
             services.AddControllers();
 
