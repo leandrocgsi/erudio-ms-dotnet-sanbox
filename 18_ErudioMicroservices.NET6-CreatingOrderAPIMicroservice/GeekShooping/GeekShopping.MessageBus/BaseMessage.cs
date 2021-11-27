@@ -8,7 +8,7 @@ namespace GeekShopping.MessageBus
 {
     public class BaseMessage
     {
-        public int Id { get; set; }
+        public long Id { get; set; }
         public DateTime MessageCreated { get; set; }
     }
 }

@@ -19,10 +19,13 @@ namespace Mango.Services.OrderAPI.Messaging
         private readonly OrderRepository _repository;
         private IConnection _connection;
         private IModel _channel;
+        private readonly IRabbitMQMessageSender _rabbitMQMessageSender;
 
-        public RabbitMQCheckoutConsumer(OrderRepository repository)
+        public RabbitMQCheckoutConsumer(OrderRepository repository,
+            IRabbitMQMessageSender rabbitMQMessageSender)
         {
             _repository = repository;
+            _rabbitMQMessageSender = rabbitMQMessageSender;
             var factory = new ConnectionFactory
             {
                 HostName = "localhost",
@@ -35,81 +38,58 @@ namespace Mango.Services.OrderAPI.Messaging
             _channel.QueueDeclare(queue: "checkoutqueue", false, false, false, arguments: null);
         }
         protected override Task ExecuteAsync(CancellationToken stoppingToken)
-        {
+        { 
             stoppingToken.ThrowIfCancellationRequested();
 
             var consumer = new EventingBasicConsumer(_channel);
-            consumer.Received += (ch, ea) =>
+            consumer.Received += (channel, evt) =>
             {
-                var content = Encoding.UTF8.GetString(ea.Body.ToArray());
-                CheckoutHeaderVO checkoutHeaderVO = JsonSerializer.Deserialize<CheckoutHeaderVO>(content);
-                HandleMessage(checkoutHeaderVO).GetAwaiter().GetResult();
+                var content = Encoding.UTF8.GetString(evt.Body.ToArray());
+                CheckoutHeaderVO vo = JsonSerializer.Deserialize<CheckoutHeaderVO>(content);
+                ProcessOrder(vo).GetAwaiter().GetResult();
 
-                _channel.BasicAck(ea.DeliveryTag, false);
+                _channel.BasicAck(evt.DeliveryTag, false);
             };
             _channel.BasicConsume("checkoutqueue", false, consumer);
 
             return Task.CompletedTask;
         }
 
-        private async Task HandleMessage(CheckoutHeaderVO checkoutHeaderVO)
+        private async Task ProcessOrder(CheckoutHeaderVO vo)
         {
-            OrderHeader header = new()
+            OrderHeader order = new()
             {
-                UserId = checkoutHeaderVO.UserId,
-                FirstName = checkoutHeaderVO.FirstName,
-                LastName = checkoutHeaderVO.LastName,
+                UserId = vo.UserId,
+                FirstName = vo.FirstName,
+                LastName = vo.LastName,
                 OrderDetails = new List<OrderDetail>(),
-                CardNumber = checkoutHeaderVO.CardNumber,
-                CouponCode = checkoutHeaderVO.CouponCode,
-                CVV = checkoutHeaderVO.CVV,
-                DiscountAmount = checkoutHeaderVO.DiscountAmount,
-                Email = checkoutHeaderVO.Email,
-                ExpiryMonthYear = checkoutHeaderVO.ExpiryMonthYear,
+                CardNumber = vo.CardNumber,
+                CouponCode = vo.CouponCode,
+                CVV = vo.CVV,
+                DiscountAmount = vo.DiscountAmount,
+                Email = vo.Email,
+                ExpiryMonthYear = vo.ExpiryMonthYear,
                 OrderTime = DateTime.Now,
-                PurchaseAmount = checkoutHeaderVO.PurchaseAmount,
+                PurchaseAmount = vo.PurchaseAmount,
                 PaymentStatus = false,
-                Phone = checkoutHeaderVO.Phone,
-                DateTime = checkoutHeaderVO.DateTime
+                Phone = vo.Phone,
+                DateTime = vo.DateTime
             };
 
-            foreach (var detailList in checkoutHeaderVO.CartDetails)
+            foreach (var details in vo.CartDetails)
             {
-                OrderDetail orderDetails = new()
+                OrderDetail detail = new()
                 {
-                    ProductId = detailList.ProductId,
-                    ProductName = detailList.Product.Name,
-                    Price = detailList.Product.Price,
-                    Count = detailList.Count
+                    ProductId = details.ProductId,
+                    ProductName = details.Product.Name,
+                    Price = details.Product.Price,
+                    Count = details.Count
                 };
-                header.CartTotalItems += detailList.Count;
-                header.OrderDetails.Add(orderDetails);
+                order.CartTotalItems += details.Count;
+                order.OrderDetails.Add(detail);
             }
 
-            await _repository.AddOrder(header);
-
-
-            /*PaymentRequestMessage paymentRequestMessage = new()
-            {
-                Name = orderHeader.FirstName + " " + orderHeader.LastName,
-                CardNumber = orderHeader.CardNumber,
-                CVV = orderHeader.CVV,
-                ExpiryMonthYear = orderHeader.ExpiryMonthYear,
-                OrderId = orderHeader.OrderHeaderId,
-                OrderTotal = orderHeader.OrderTotal,
-                Email = orderHeader.Email
-            };
-
-            try
-            {
-                //await _messageBus.PublishMessage(paymentRequestMessage, orderPaymentProcessTopic);
-                //await args.CompleteMessageAsync(args.Message);
-                _rabbitMQMessageSender.SendMessage(paymentRequestMessage, "orderpaymentprocesstopic");
-            }
-            catch (Exception e)
-            {
-                throw;
-            }*/
+            await _repository.AddOrder(order);
         }
     }
 }

@@ -7,7 +7,6 @@ namespace GeekShopping.OrderAPI.Messages
     public class CheckoutHeaderVO : BaseMessage
     {
         //Copiar CheckoutHeaderVO do Cart API - Message
-        public long Id { get; set; }
         public string UserId { get; set; }
         public string CouponCode { get; set; }
         public decimal PurchaseAmount { get; set; }
