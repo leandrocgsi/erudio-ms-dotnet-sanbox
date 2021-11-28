@@ -6,11 +6,15 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using RabbitMQ.Client;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Net.Http.Headers;
+using System.Reflection.PortableExecutable;
 using System.Threading.Tasks;
+using static Humanizer.In;
 
 namespace GeekShopping.CartAPI.Controllers
 {
@@ -82,17 +86,19 @@ namespace GeekShopping.CartAPI.Controllers
         [HttpPost("checkout")]
         public async Task<ActionResult<CheckoutHeaderVO>> Checkout(CheckoutHeaderVO vo)
         {
+            string token = Request.Headers["Authorization"];
+
             if (vo?.UserId == null) return BadRequest();
             var cart = await _cartRepository.FindCartByUserId(vo.UserId);
             if (cart == null) return NotFound();
 
             if (!string.IsNullOrEmpty(vo.CouponCode))
             {
-                CouponVO coupon = await _couponRepository.GetCoupon(vo.CouponCode);
+                CouponVO coupon = await _couponRepository.GetCoupon(vo.CouponCode, token);
                 if (vo.DiscountAmount != coupon.DiscountAmount)
                 {
                     // 412 Precondition Failed
-                    return StatusCode(412, new List<string>() { "Coupon Price has changed, please confirm" });
+                    return StatusCode(412);
                 }
             }
 
