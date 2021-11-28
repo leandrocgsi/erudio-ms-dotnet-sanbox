@@ -90,6 +90,27 @@ namespace Mango.Services.OrderAPI.Messaging
             }
 
             await _repository.AddOrder(order);
+
+
+            PaymentVO paymentRequestMessage = new()
+            {
+                Name = order.FirstName + " " + order.LastName,
+                CardNumber = order.CardNumber,
+                CVV = order.CVV,
+                ExpiryMonthYear = order.ExpiryMonthYear,
+                OrderId = order.Id,
+                PurchaseAmount = order.PurchaseAmount,
+                Email = order.Email
+            };
+
+            try
+            {
+                _rabbitMQMessageSender.SendMessage(paymentRequestMessage, "orderpaymentprocesstopic");
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
     }
 }
