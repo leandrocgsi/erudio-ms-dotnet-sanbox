@@ -28,7 +28,7 @@ namespace GeekShopping.OrderAPI.Migrations
                     last_name = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     purchase_date = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    purchase_time = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    order_time = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     phone_number = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     email = table.Column<string>(type: "longtext", nullable: true)

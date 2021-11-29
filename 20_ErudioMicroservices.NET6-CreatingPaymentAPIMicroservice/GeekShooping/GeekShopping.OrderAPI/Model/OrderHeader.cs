@@ -30,7 +30,7 @@ namespace GeekShopping.OrderAPI.Model
         [Column("purchase_date")]
         public DateTime DateTime { get; set; }
 
-        [Column("purchase_time")]
+        [Column("order_time")]
         public DateTime OrderTime { get; set; }
 
         [Column("phone_number")]

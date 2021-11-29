@@ -105,7 +105,7 @@ namespace Mango.Services.OrderAPI.Messaging
 
             try
             {
-                _rabbitMQMessageSender.SendMessage(paymentRequestMessage, "orderpaymentprocesstopic");
+                _rabbitMQMessageSender.SendMessage(paymentRequestMessage, "orderpaymentprocessqueue");
             }
             catch (Exception)
             {

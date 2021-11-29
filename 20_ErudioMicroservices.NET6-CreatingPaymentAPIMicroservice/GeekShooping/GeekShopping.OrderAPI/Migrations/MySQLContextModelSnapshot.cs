@@ -99,7 +99,7 @@ namespace GeekShopping.OrderAPI.Migrations
 
                     b.Property<DateTime>("OrderTime")
                         .HasColumnType("datetime(6)")
-                        .HasColumnName("purchase_time");
+                        .HasColumnName("order_time");
 
                     b.Property<bool>("PaymentStatus")
                         .HasColumnType("tinyint(1)")
