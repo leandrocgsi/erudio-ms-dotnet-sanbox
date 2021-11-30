@@ -25,9 +25,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GeekShopping.OrderAPI", "Ge
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Payments", "Payments", "{BA6EADF5-49B6-44CD-BE4F-0A730ED02037}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeekShopping.PaymentProcessor", "GeekShopping.PaymentProcessor\GeekShopping.PaymentProcessor.csproj", "{9A3B2721-58F2-44DA-954D-59160655F960}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GeekShopping.PaymentProcessor", "GeekShopping.PaymentProcessor\GeekShopping.PaymentProcessor.csproj", "{9A3B2721-58F2-44DA-954D-59160655F960}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeekShopping.PaymentAPI", "GeekShopping.PaymentAPI\GeekShopping.PaymentAPI.csproj", "{E548F2CB-C807-44E1-A2FA-AAA3EEAE8000}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GeekShopping.PaymentAPI", "GeekShopping.PaymentAPI\GeekShopping.PaymentAPI.csproj", "{E548F2CB-C807-44E1-A2FA-AAA3EEAE8000}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeekShopping.Email", "GeekShopping.Email\GeekShopping.Email.csproj", "{D38CC829-5AAA-4F8C-899C-D2E0A67A90AA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Gateway", "Gateway", "{6AA89D24-7549-41D1-85F3-3EF28A59999B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeekShopping.APIGateway", "GeekShopping.APIGateway\GeekShopping.APIGateway.csproj", "{2C2908CB-0E34-41CB-98D4-01E123F1B4FF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -71,6 +77,14 @@ Global
 		{E548F2CB-C807-44E1-A2FA-AAA3EEAE8000}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E548F2CB-C807-44E1-A2FA-AAA3EEAE8000}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E548F2CB-C807-44E1-A2FA-AAA3EEAE8000}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D38CC829-5AAA-4F8C-899C-D2E0A67A90AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D38CC829-5AAA-4F8C-899C-D2E0A67A90AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D38CC829-5AAA-4F8C-899C-D2E0A67A90AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D38CC829-5AAA-4F8C-899C-D2E0A67A90AA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2C2908CB-0E34-41CB-98D4-01E123F1B4FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C2908CB-0E34-41CB-98D4-01E123F1B4FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C2908CB-0E34-41CB-98D4-01E123F1B4FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C2908CB-0E34-41CB-98D4-01E123F1B4FF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -85,6 +99,8 @@ Global
 		{17C19ACC-96DD-4B31-A0AF-D483DB0737C5} = {BE8F341D-1378-4B40-88F9-6901B74F17C3}
 		{9A3B2721-58F2-44DA-954D-59160655F960} = {BA6EADF5-49B6-44CD-BE4F-0A730ED02037}
 		{E548F2CB-C807-44E1-A2FA-AAA3EEAE8000} = {BE8F341D-1378-4B40-88F9-6901B74F17C3}
+		{D38CC829-5AAA-4F8C-899C-D2E0A67A90AA} = {BE8F341D-1378-4B40-88F9-6901B74F17C3}
+		{2C2908CB-0E34-41CB-98D4-01E123F1B4FF} = {6AA89D24-7549-41D1-85F3-3EF28A59999B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {44782F14-DB85-4BF3-BFEA-254F451A02FA}
