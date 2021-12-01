@@ -39,10 +39,9 @@ builderIdentity.AddDeveloperSigningCredential();
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
+var scope = app.Services.CreateScope();
 
-//IDbInitializer dbInitializer = app.Services.GetRequiredService<IDbInitializer>();
-IDbInitializer dbInitializer = app.Services.GetRequiredService<IDbInitializer>();
-
+var dbInitializer = scope.ServiceProvider.GetService<IDbInitializer>();
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
