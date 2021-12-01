@@ -39,8 +39,8 @@ namespace GeekShopping.Email
                             new Version(8, 0, 5)));
 
             services.AddSingleton(new EmailRepository(builder.Options));
-            services.AddScoped<IEmailRepository, EmailRepository>();
 
+            services.AddScoped<IEmailRepository, EmailRepository>();
             services.AddHostedService<RabbitMQPaymentConsumer>();
 
             services.AddControllers();
