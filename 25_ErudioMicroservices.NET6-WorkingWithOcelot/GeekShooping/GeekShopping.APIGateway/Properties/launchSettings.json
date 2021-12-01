@@ -8,14 +8,6 @@
     }
   },
   "profiles": {
-    "IIS Express": {
-      "commandName": "Project",
-      "launchBrowser": true,
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
-      },
-      "applicationUrl": "https://localhost:4480/"
-    },
     "GeekShopping.APIGateway": {
       "commandName": "Project",
       "launchBrowser": true,
@@ -25,6 +17,14 @@
       "hotReloadProfile": "aspnetcore",
       "dotnetRunMessages": "true",
       "applicationUrl": "https://localhost:4480;http://localhost:4481"
+    },
+    "IIS Express": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:4480/"
     }
   }
 }
