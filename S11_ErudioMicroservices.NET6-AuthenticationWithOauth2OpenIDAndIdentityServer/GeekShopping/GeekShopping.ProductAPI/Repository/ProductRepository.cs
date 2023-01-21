@@ -3,6 +3,10 @@ using GeekShopping.ProductAPI.Data.ValueObjects;
 using GeekShopping.ProductAPI.Model;
 using GeekShopping.ProductAPI.Model.Context;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace GeekShopping.ProductAPI.Repository
 {
@@ -27,8 +31,7 @@ namespace GeekShopping.ProductAPI.Repository
         {
             Product product =
                 await _context.Products.Where(p => p.Id == id)
-            .FirstOrDefaultAsync() ?? new Product();
-
+                .FirstOrDefaultAsync();
             return _mapper.Map<ProductVO>(product);
         }
 
@@ -53,8 +56,8 @@ namespace GeekShopping.ProductAPI.Repository
             {
                 Product product =
                 await _context.Products.Where(p => p.Id == id)
-                    .FirstOrDefaultAsync() ?? new Product();
-                if (product.Id <= 0) return false;
+                    .FirstOrDefaultAsync();
+                if (product == null) return false;
                 _context.Products.Remove(product);
                 await _context.SaveChangesAsync();
                 return true;
