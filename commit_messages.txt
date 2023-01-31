@@ -19,4 +19,4 @@ S22_ErudioMicroservices.NET6-SyncCommunicationBetweenMicroservices/             
 S23_ErudioMicroservices.NET6-CreatingPaymentAPIMicroservice/                    git acmp 'Creating Microservice GeekShopping.PaymentAPI'
 S24A_ErudioMicroservices.NET6-WorkingWithExchangesInRabbitMQ-Fanout/            git acmp 'Working with Exchanges in RabbitMQ - Fanout'
 S24B_ErudioMicroservices.NET6-WorkingWithExchangesInRabbitMQ-Direct/            git acmp 'Working with Exchanges in RabbitMQ - Direct Exchange'
-S25_ErudioMicroservices.NET6-WorkingWithOcelot/                                 git acmp 'Working with Ocelot'
+S25_ErudioMicroservices.NET6-WorkingWithOcelot/                                 git acmp 'Working with Ocelot API Gateway'
